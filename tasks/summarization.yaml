@@ -1,0 +1,147 @@
+tasks:
+  - id: sum_001
+    category: summarization
+
+    prompt: >
+      Summarize the following incident report in 4 bullet points:
+
+      On April 17, the production recommendation API experienced elevated
+      latency for 27 minutes. Investigation showed that a newly deployed
+      embedding model increased GPU memory consumption beyond expected limits,
+      causing inference workers to restart repeatedly. Autoscaling failed
+      because GPU utilization metrics were delayed by approximately five
+      minutes. Engineers mitigated the issue by rolling back the deployment
+      and temporarily reducing batch size. A follow-up action item was created
+      to validate VRAM usage during staging deployments.
+
+    ground_truth:
+      - Recommendation API experienced elevated latency for 27 minutes
+      - New embedding model increased GPU memory usage
+      - Inference workers restarted repeatedly
+      - Autoscaling reacted too slowly due to delayed metrics
+      - Rollback and batch-size reduction mitigated the issue
+      - Follow-up action added for VRAM validation in staging
+
+    rubric: >
+      Summary must preserve root cause, operational impact, mitigation,
+      and follow-up actions. Penalize omission of GPU-memory failure details.
+
+  - id: sum_002
+    category: summarization
+
+    prompt: >
+      Summarize the following engineering meeting notes:
+
+      The ML platform team discussed migrating model inference workloads from
+      REST APIs to gRPC in order to reduce serialization overhead and improve
+      throughput. Benchmark results showed approximately 18 percent lower
+      latency under concurrent traffic. Concerns were raised regarding client
+      compatibility and observability tooling. The migration will begin with
+      internal services before external APIs are modified.
+
+    ground_truth:
+      - Team discussed migrating inference workloads from REST to gRPC
+      - Goal was reducing serialization overhead and improving throughput
+      - Benchmarks showed approximately 18 percent lower latency
+      - Concerns included client compatibility and observability
+      - Migration will start with internal services
+
+    rubric: >
+      Summary must preserve technical motivation, benchmark findings,
+      migration strategy, and operational concerns.
+
+  - id: sum_003
+    category: summarization
+
+    prompt: >
+      Summarize the following ML evaluation report:
+
+      Two embedding models were evaluated on semantic search quality and
+      inference latency. Model A achieved higher retrieval precision but
+      required nearly twice the GPU memory of Model B. Model B produced
+      slightly lower ranking accuracy but reduced average query latency from
+      81 milliseconds to 46 milliseconds. The report concluded that Model B
+      was preferable for production deployment due to lower infrastructure cost.
+
+    ground_truth:
+      - Model A achieved better retrieval precision
+      - Model A required significantly more GPU memory
+      - Model B reduced average query latency from 81 ms to 46 ms
+      - Model B had slightly lower ranking accuracy
+      - Report recommended Model B for production due to lower infrastructure cost
+
+    rubric: >
+      Summary must preserve tradeoffs between accuracy, latency,
+      and infrastructure cost. Penalize omission of deployment recommendation.
+
+  - id: sum_004
+    category: summarization
+
+    prompt: >
+      Summarize the following deployment postmortem:
+
+      A production deployment introduced a dependency mismatch between the API
+      service and the authentication library. Health checks continued to pass
+      because cached tokens remained valid for existing sessions. New login
+      requests failed for approximately 14 minutes before rollback procedures
+      restored compatibility. Engineers later added integration tests covering
+      authentication flows during staged deployments.
+
+    ground_truth:
+      - Dependency mismatch caused authentication failures
+      - Existing sessions remained functional due to cached tokens
+      - New login requests failed for about 14 minutes
+      - Rollback restored service compatibility
+      - Integration tests were added after the incident
+
+    rubric: >
+      Summary must preserve failure mechanism, operational impact,
+      rollback response, and corrective actions.
+
+  - id: sum_005
+    category: summarization
+
+    prompt: >
+      Summarize the following infrastructure report:
+
+      The vector database cluster experienced intermittent query failures after
+      storage utilization exceeded 92 percent. Replication lag increased under
+      peak indexing workloads, causing several read replicas to fall behind.
+      Engineers expanded persistent storage volumes and temporarily reduced
+      indexing concurrency to stabilize the system. Monitoring thresholds were
+      updated to trigger alerts earlier.
+
+    ground_truth:
+      - Query failures occurred after storage utilization exceeded 92 percent
+      - Replication lag increased during peak indexing workloads
+      - Read replicas fell behind
+      - Storage expansion and reduced indexing concurrency stabilized the system
+      - Monitoring thresholds were adjusted for earlier alerts
+
+    rubric: >
+      Summary must preserve infrastructure bottlenecks, mitigation steps,
+      and monitoring improvements.
+
+  - id: sum_006
+    category: summarization
+
+    prompt: >
+      Summarize the following LLM evaluation discussion:
+
+      The evaluation team determined that exact-match accuracy alone was
+      insufficient for measuring open-ended generation quality. Several model
+      outputs were semantically correct despite differing wording. The team
+      decided to add BERTScore and human evaluation sampling to the pipeline.
+      Latency p95 and hallucination rate would also become mandatory metrics
+      for future benchmark runs.
+
+    ground_truth:
+      - Exact-match accuracy was considered insufficient
+      - Semantically correct answers often used different wording
+      - Team decided to add BERTScore evaluation
+      - Human evaluation sampling would be introduced
+      - Latency p95 and hallucination rate became required metrics
+
+    rubric: >
+      Summary must preserve evaluation limitations, new metric decisions,
+      and rationale for semantic evaluation.

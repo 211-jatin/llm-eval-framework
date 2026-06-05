@@ -1,0 +1,180 @@
+tasks:
+  - id: qa_001
+    category: qa
+
+    prompt: >
+      A Retrieval-Augmented Generation (RAG) system produces fluent answers that
+      are factually incorrect despite retrieving relevant documents. What are the
+      most likely causes, and how would you diagnose them?
+
+    ground_truth:
+      - The model may prioritize parametric memory over retrieved context
+      - Retrieved chunks may be only partially relevant to the query
+      - Chunk boundaries may split critical information
+      - Context ordering may reduce attention to important passages
+      - Prompt instructions may not enforce grounded answering
+      - Retrieval recall may be low despite apparently relevant results
+      - Hallucinations can occur when context is ambiguous or incomplete
+      - Faithfulness evaluation should compare generated claims against retrieved context
+      - Reranking retrieved chunks can improve relevance
+      - Context truncation may remove critical evidence
+
+    rubric: >
+      Strong answers must analyze failures in both retrieval and generation.
+      Must mention grounding failures, retrieval quality, chunking strategy,
+      and faithfulness evaluation. High-quality answers include reranking,
+      truncation effects, and parametric-memory interference.
+
+  - id: qa_002
+    category: qa
+
+    prompt: >
+      Why is exact-match accuracy a poor standalone metric for evaluating
+      large language models on open-ended generation tasks?
+
+    ground_truth:
+      - Multiple semantically correct answers may exist
+      - Exact wording may differ despite factual correctness
+      - Exact match fails to measure semantic similarity
+      - Open-ended tasks require contextual evaluation
+      - Exact match penalizes paraphrasing
+      - Metrics such as BERTScore or ROUGE capture semantic overlap better
+      - Human evaluation is often necessary for nuanced generation tasks
+      - Exact match is more suitable for constrained QA tasks
+
+    rubric: >
+      Strong answers must explain why semantic equivalence matters in LLM
+      evaluation. Must mention limitations of string matching and discuss
+      semantic metrics such as BERTScore, ROUGE, or embedding-based evaluation.
+
+  - id: qa_003
+    category: qa
+
+    prompt: >
+      A language model achieves high benchmark scores offline but performs poorly
+      in production user interactions. What are the most likely reasons?
+
+    ground_truth:
+      - Benchmark datasets may not reflect real-world distributions
+      - Models may overfit to benchmark patterns
+      - User prompts are often noisier and less structured
+      - Distribution shift can degrade performance
+      - Offline metrics may ignore latency and reliability constraints
+      - Benchmarks may not evaluate hallucination behavior sufficiently
+      - Prompt injection or adversarial inputs may appear in production
+      - Real-world evaluation requires continuous monitoring and feedback loops
+
+    rubric: >
+      Strong answers should discuss benchmark overfitting, distribution shift,
+      adversarial inputs, and production constraints. Weak answers that only
+      mention overfitting are insufficient.
+
+  - id: qa_004
+    category: qa
+
+    prompt: >
+      Why can increasing context-window size improve LLM performance on some
+      tasks while simultaneously degrading reliability or efficiency?
+
+    ground_truth:
+      - Larger context windows allow more information retention
+      - Attention computation grows significantly with sequence length
+      - Long contexts increase memory and latency costs
+      - Important information may become diluted in very large contexts
+      - Models may struggle to attend equally across all tokens
+      - Context truncation strategies become more important
+      - Retrieval quality matters more as context size increases
+      - Long-context reasoning remains a challenge in many models
+
+    rubric: >
+      Strong answers must discuss both benefits and tradeoffs of large context
+      windows. Must mention attention scaling, latency, memory usage,
+      information dilution, and retrieval considerations.
+
+  - id: qa_005
+    category: qa
+
+    prompt: >
+      Why does quantization reduce VRAM usage during LLM inference, and what
+      failure modes can appear when aggressively quantizing a model?
+
+    ground_truth:
+      - Quantization reduces numerical precision of model weights
+      - Lower precision decreases memory usage
+      - Reduced precision improves inference efficiency
+      - Quantization can introduce approximation errors
+      - Aggressive quantization may degrade reasoning quality
+      - Smaller models are often more sensitive to quantization loss
+      - Certain layers are more sensitive to precision reduction
+      - Low-bit quantization may destabilize generation quality
+
+    rubric: >
+      Strong answers must explain the relationship between precision reduction,
+      VRAM savings, and numerical error. High-quality answers include reasoning
+      degradation, layer sensitivity, and low-bit inference tradeoffs.
+
+  - id: qa_006
+    category: qa
+
+    prompt: >
+      Why can fine-tuning an LLM on a small domain-specific dataset increase
+      hallucinations instead of reducing them?
+
+    ground_truth:
+      - Small datasets may cause overfitting
+      - Fine-tuning can distort previously learned representations
+      - Limited data coverage creates generalization gaps
+      - The model may memorize patterns without factual grounding
+      - Distribution mismatch can destabilize behavior
+      - Catastrophic forgetting may occur
+      - Fine-tuning does not guarantee factual correctness
+      - Retrieval grounding may still be necessary after fine-tuning
+
+    rubric: >
+      Strong answers must discuss overfitting, catastrophic forgetting,
+      distribution mismatch, and lack of grounding. Weak answers that only say
+      "bad data causes hallucinations" are insufficient.
+
+  - id: qa_007
+    category: qa
+
+    prompt: >
+      In an LLM evaluation framework, why is latency measurement important in
+      addition to output-quality metrics?
+
+    ground_truth:
+      - High-quality outputs may still be unusable if latency is excessive
+      - Production systems require responsiveness
+      - Latency affects user experience and throughput
+      - Token generation speed impacts serving cost
+      - Tail latency such as p95 and p99 is operationally important
+      - Large models may create scalability bottlenecks
+      - Hardware utilization affects inference latency
+      - Evaluation frameworks should measure both quality and efficiency
+
+    rubric: >
+      Strong answers must connect latency to production usability,
+      scalability, and operational cost. Must mention p95/p99 latency
+      and throughput considerations.
+
+  - id: qa_008
+    category: qa
+
+    prompt: >
+      Why is hallucination detection difficult to automate reliably in LLM
+      evaluation systems?
+
+    ground_truth:
+      - Hallucinations depend on factual grounding and context
+      - Generated text may appear linguistically convincing
+      - Multiple partially correct answers may exist
+      - Automated metrics may fail to detect subtle factual errors
+      - External knowledge verification is difficult at scale
+      - Human evaluation is often required for nuanced judgments
+      - Retrieval-based grounding complicates evaluation
+      - Semantic similarity does not guarantee factual correctness
+
+    rubric: >
+      Strong answers must explain why hallucination detection is more difficult
+      than simple text matching. High-quality answers discuss grounding,
+      semantic ambiguity, automated metric limitations, and human evaluation.

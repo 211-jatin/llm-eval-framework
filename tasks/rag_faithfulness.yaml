@@ -1,0 +1,70 @@
+tasks:
+  - id: rag_001
+    category: rag_faithfulness
+    context: >
+      The transformer architecture was introduced in the paper Attention Is All
+      You Need published in 2017. It replaced recurrent neural networks with
+      self-attention mechanisms, allowing parallel processing of sequences.
+      Transformers became the foundation for models like BERT and GPT.
+    prompt: "What did the transformer architecture replace and what was the key mechanism introduced?"
+    ground_truth: "Transformers replaced recurrent neural networks and introduced self-attention mechanisms for parallel sequence processing."
+    rubric: "Answer must be grounded in the context. Must mention RNN replacement and self-attention."
+
+  - id: rag_002
+    category: rag_faithfulness
+    context: >
+      BERT stands for Bidirectional Encoder Representations from Transformers.
+      It was pre-trained on masked language modeling and next sentence prediction
+      tasks. BERT reads text bidirectionally, meaning it considers both left and
+      right context simultaneously, which improved performance on many NLP tasks.
+    prompt: "How does BERT read text and what tasks was it pre-trained on?"
+    ground_truth: "BERT reads text bidirectionally considering both left and right context. It was pre-trained on masked language modeling and next sentence prediction."
+    rubric: "Must mention bidirectional reading and both pre-training tasks from the context."
+
+  - id: rag_003
+    category: rag_faithfulness
+    context: >
+      Retrieval-Augmented Generation combines a retrieval system with a
+      generative language model. When a query is received, relevant documents
+      are retrieved from a knowledge base and passed as context to the language
+      model. The model then generates an answer grounded in the retrieved
+      documents rather than relying solely on parametric memory.
+    prompt: "How does Retrieval-Augmented Generation work?"
+    ground_truth: "RAG retrieves relevant documents from a knowledge base and passes them as context to a language model, which generates answers grounded in those documents."
+    rubric: "Must mention retrieval step, context passing, and grounded generation."
+
+  - id: rag_004
+    category: rag_faithfulness
+    context: >
+      Quantization is a model compression technique that reduces the numerical
+      precision of model weights from 32-bit floating point to lower bit
+      representations such as 8-bit integers. This reduces memory usage and
+      speeds up inference. However aggressive quantization can degrade model
+      accuracy, especially for smaller models.
+    prompt: "What is quantization and what is its main tradeoff?"
+    ground_truth: "Quantization reduces weight precision to lower bit formats, saving memory and speeding inference. The tradeoff is potential accuracy degradation especially in smaller models."
+    rubric: "Must mention precision reduction, memory saving, and accuracy degradation tradeoff."
+
+  - id: rag_005
+    category: rag_faithfulness
+    context: >
+      Fine-tuning is the process of continuing training a pre-trained model on
+      a smaller domain-specific dataset. It allows the model to adapt its
+      weights to a new task while retaining general knowledge from pre-training.
+      Fine-tuning requires significantly less data and compute than training
+      from scratch.
+    prompt: "What is fine-tuning and what advantage does it have over training from scratch?"
+    ground_truth: "Fine-tuning continues training a pre-trained model on domain-specific data. It requires less data and compute than training from scratch while adapting the model to a new task."
+    rubric: "Must mention pre-trained model, domain adaptation, and compute/data efficiency."
+
+  - id: rag_006
+    category: rag_faithfulness
+    context: >
+      Vector databases store high-dimensional embeddings and allow efficient
+      similarity search using metrics such as cosine similarity or dot product.
+      They are commonly used in RAG systems to retrieve semantically similar
+      documents given a query embedding. Popular vector databases include
+      Pinecone, Weaviate, and ChromaDB.
+    prompt: "What is the role of a vector database in a RAG system?"
+    ground_truth: "Vector databases store embeddings and perform similarity search to retrieve semantically relevant documents given a query embedding in RAG systems."
+    rubric: "Must mention embeddings, similarity search, and retrieval role in RAG."

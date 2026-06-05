@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Eval Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+        h1,
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>LLM Evaluation Dashboard</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Date</th>
+                <th>Avg F1</th>
+                <th>Avg Latency</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="runs-table">
+        </tbody>
+    </table>
+
+    <h2>Run Results</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Task ID</th>
+                <th>Category</th>
+                <th>F1</th>
+                <th>Exact Match</th>
+                <th>Latency</th>
+                <th>BERTScore</th>
+            </tr>
+        </thead>
+
+        <tbody id="results-table">
+        </tbody>
+    </table>
+
+    <script>
+
+        async function loadRuns() {
+
+            const response = await fetch(
+                "/runs"
+            )
+
+            const data = await response.json()
+
+            const table = document.getElementById(
+                "runs-table"
+            )
+
+            table.innerHTML = ""
+
+            data.forEach(run => {
+
+                const row = `
+                    <tr>
+                        <td>${run.id}</td>
+                        <td>${run.model_name}</td>
+                        <td>${new Date(run.run_date).toLocaleString()}</td>
+                        <td>${run.avg_f1.toFixed(4)}</td>
+                        <td>${run.avg_latency.toFixed(4)}</td>
+
+                        <td>
+                            <button onclick="viewRun(${run.id})">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                `
+
+                table.innerHTML += row
+            })
+        }
+
+
+        async function viewRun(runId) {
+
+            const response = await fetch(
+                `/runs/${runId}`
+            )
+
+            const run = await response.json()
+
+            const resultsTable = document.getElementById(
+                "results-table"
+            )
+
+            resultsTable.innerHTML = ""
+
+            run.results.forEach(result => {
+
+                const row = `
+                    <tr>
+                        <td>${result.task_id}</td>
+                        <td>${result.category}</td>
+                        <td>${result.f1.toFixed(4)}</td>
+                        <td>${result.exact_match}</td>
+                        <td>${result.latency.toFixed(4)}</td>
+                        <td>${result.bert_score ?? "N/A"}</td>
+                    </tr>
+                `
+
+                resultsTable.innerHTML += row
+            })
+        }
+
+        loadRuns()
+
+    </script>
+
+</body>
+
+</html>
+
