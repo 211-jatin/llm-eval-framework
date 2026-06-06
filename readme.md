@@ -224,8 +224,6 @@ Supported task categories:
 * Question Answering
 * Summarization
 * RAG Faithfulness
-* Instruction Following
-* Code Generation
 
 ---
 
@@ -238,7 +236,7 @@ Example responsibilities:
 ```python
 class ModelAdapter(ABC):
     @abstractmethod
-    async def generate(self, prompt: str) -> ModelResponse:
+       def generate(self, input_prompt: str) -> dict:
         pass
 ```
 
