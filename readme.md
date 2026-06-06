@@ -1,6 +1,3 @@
-Below is a complete README draft structured like a real production-grade open-source project.
-It is written as if this is an actual portfolio-ready engineering project, not a tutorial repo.
-
 # LLM Evaluation Framework
 
 A model-agnostic benchmarking framework for evaluating and comparing Large Language Models across quality, latency, cost, faithfulness, and safety metrics.
