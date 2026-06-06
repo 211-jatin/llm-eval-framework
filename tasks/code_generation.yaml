@@ -1,0 +1,278 @@
+- id: codegen_inference_reverse_string
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a correct and efficient Python function:
+
+        def reverse_string(s: str) -> str
+
+    Requirements:
+    - Return the reversed string
+    - Do not use external libraries
+    - Preserve whitespace and symbols
+    - Function must be deterministic
+
+    Example:
+    Input: "hello"
+    Output: "olleh"
+  ground_truth: |
+    def reverse_string(s: str) -> str:
+        return s[::-1]
+
+- id: codegen_inference_binary_search
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Implement binary search in Python.
+
+    Function signature:
+
+        def binary_search(arr: list[int], target: int) -> int
+
+    Requirements:
+    - Input list is sorted in ascending order
+    - Return the index of target if found
+    - Return -1 if target does not exist
+    - Do not use Python built-in search helpers
+    - Time complexity must be O(log n)
+
+    Example:
+    Input: arr=[1,2,3,4,5], target=4
+    Output: 3
+  ground_truth: |
+    def binary_search(arr: list[int], target: int) -> int:
+        left = 0
+        right = len(arr) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if arr[mid] == target:
+                return mid
+
+            if arr[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return -1
+
+- id: codegen_inference_bugfix_sum_list
+  category: bug_fixing
+  prompt: |
+    You are evaluating a code repair model.
+
+    The following Python function contains a bug.
+
+    Task:
+    Fix the implementation so that it correctly sums all
+    integers in the input list.
+
+    Buggy code:
+
+    ```python
+    def sum_list(nums):
+        total = 0
+
+        for i in range(len(nums) - 1):
+            total += nums[i]
+
+        return total
+    ```
+  ground_truth: |
+    def sum_list(nums):
+        total = 0
+
+        for i in range(len(nums)):
+            total += nums[i]
+
+        return total
+
+- id: codegen_inference_timing_decorator
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a Python decorator named `measure_time`
+    that measures execution time of the wrapped function.
+
+    Requirements:
+    - Use the built-in `time` module
+    - Print execution time in seconds
+    - Return the original function result
+    - Support arbitrary positional and keyword arguments
+
+    Expected signature:
+
+        def measure_time(func):
+            ...
+  ground_truth: |
+    import time
+
+    def measure_time(func):
+        def wrapper(*args, **kwargs):
+            start = time.time()
+
+            result = func(*args, **kwargs)
+
+            end = time.time()
+
+            print(f"Execution time: {end - start:.6f} seconds")
+
+            return result
+
+        return wrapper
+
+- id: codegen_inference_palindrome
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a Python function:
+
+        def is_palindrome(s: str) -> bool
+
+    Requirements:
+    - Return True if the string is a palindrome
+    - Ignore character casing
+    - Do not use external libraries
+
+    Example:
+    Input: "RaceCar"
+    Output: True
+  ground_truth: |
+    def is_palindrome(s: str) -> bool:
+        normalized = s.lower()
+        return normalized == normalized[::-1]
+
+- id: codegen_inference_fizzbuzz
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Implement the classic FizzBuzz problem.
+
+    Function signature:
+
+        def fizzbuzz(n: int) -> list[str]
+
+    Requirements:
+    - Iterate from 1 to n inclusive
+    - Multiples of 3 -> "Fizz"
+    - Multiples of 5 -> "Buzz"
+    - Multiples of both 3 and 5 -> "FizzBuzz"
+    - Otherwise return the number as a string
+
+    Example:
+    Input: 5
+    Output: ["1", "2", "Fizz", "4", "Buzz"]
+  ground_truth: |
+    def fizzbuzz(n: int) -> list[str]:
+        result = []
+
+        for i in range(1, n + 1):
+            if i % 15 == 0:
+                result.append("FizzBuzz")
+            elif i % 3 == 0:
+                result.append("Fizz")
+            elif i % 5 == 0:
+                result.append("Buzz")
+            else:
+                result.append(str(i))
+
+        return result
+
+- id: codegen_inference_word_frequency
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a Python function:
+
+        def count_words(text: str) -> dict
+
+    Requirements:
+    - Split words using whitespace
+    - Count occurrences of each word
+    - Return a dictionary mapping word -> frequency
+    - Preserve original casing
+    - Do not use collections.Counter
+
+    Example:
+    Input: "apple banana apple"
+    Output: {"apple": 2, "banana": 1}
+  ground_truth: |
+    def count_words(text: str) -> dict:
+        counts = {}
+
+        for word in text.split():
+            counts[word] = counts.get(word, 0) + 1
+
+        return counts
+
+- id: codegen_inference_two_sum
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a Python function:
+
+        def two_sum(nums: list[int], target: int) -> list[int]
+
+    Requirements:
+    - Return indices of the two numbers that add to target
+    - Assume exactly one valid solution exists
+    - Do not use the same element twice
+    - Time complexity should be O(n)
+
+    Example:
+    Input: nums=[2,7,11,15], target=9
+    Output: [0,1]
+  ground_truth: |
+    def two_sum(nums: list[int], target: int) -> list[int]:
+        seen = {}
+
+        for i, num in enumerate(nums):
+            complement = target - num
+
+            if complement in seen:
+                return [seen[complement], i]
+
+            seen[num] = i
+
+        return []
+
+- id: codegen_inference_json_parser
+  category: code_generation
+  prompt: |
+    You are evaluating a code generation model.
+
+    Task:
+    Write a Python function:
+
+        def parse_json_file(path: str) -> dict
+
+    Requirements:
+    - Read a JSON file from disk
+    - Return parsed JSON as a dictionary
+    - Use Python standard library only
+    - Raise exceptions normally if the file is invalid
+
+    Example:
+    Input: "config.json"
+    Output: parsed dictionary
+  ground_truth: |
+    import json
+
+    def parse_json_file(path: str) -> dict:
+        with open(path, "r") as f:
+            return json.load(f)
